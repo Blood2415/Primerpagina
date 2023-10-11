@@ -1,0 +1,23 @@
+<body>
+    <script>
+    console.log("longitud del arreglo")
+    let frutas = ["Manzana", "Banana"];
+    console.log(frutas.length);  
+    console.log("agrego un elemento a la lista " + frutas)
+    let nuevaLongitud = frutas.push("Naranja");
+    console.log("longitud del arreglo: "+frutas.length);  
+    console.log("agrego tres elementos a la lista " + frutas)
+     nuevaLongitud = frutas.push("uva","sandia","pera");
+    console.log("longitud del arreglo: "+frutas.length);
+    console.log("añade un elemento al principio de la lista " + frutas)
+    nuevaLongitud = frutas.unshift("guayaba");
+    console.log("longitud del arreglo: "+frutas.length);
+    console.log("Encuentra el índice de un elemento de la lista " + frutas)
+    pos = frutas.indexOf("sandia");
+    console.log("longitud del arreglo: "+frutas.length); 
+    console.log("elimina un elemento de la lista " + frutas)
+    ultimo = frutas.pop(5);
+    console.log("longitud del arreglo: "+frutas.length);
+    </script> 
+</body>
+</html>
