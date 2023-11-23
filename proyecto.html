@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reproductor de Música</title>
+</head>
+<body>
+
+  <h1>Reproductor de Música</h1>
+
+  <script>
+    var canciones = [
+      { nombre: 'Canción 1', artista: 'Artista 1', archivo: 'cancion1.mp3' },
+      { nombre: 'Canción 2', artista: 'Artista 2', archivo: 'cancion2.mp3' },
+      { nombre: 'Canción 3', artista: 'Artista 3', archivo: 'cancion3.mp3' }
+    ];
+
+    var audio = new Audio(); // Elemento de audio HTML
+
+    function reproducirCancion(indice) {
+      var cancion = canciones[indice];
+      audio.src = cancion.archivo;
+      audio.play();
+      console.log('Reproduciendo: ' + cancion.nombre + ' - ' + cancion.artista);
+    }
+
+    function detenerReproduccion() {
+      audio.pause();
+      audio.currentTime = 0;
+      console.log('Reproducción detenida.');
+    }
+
+    function mostrarListaCanciones() {
+      console.log('Lista de Canciones:');
+      canciones.forEach(function(cancion, indice) {
+        console.log(indice + 1 + '. ' + cancion.nombre + ' - ' + cancion.artista);
+      });
+    }
+
+    // Ejemplo de uso
+    reproducirCancion(0);
+    mostrarListaCanciones();
+    detenerReproduccion();
+  </script>
+
+</body>
+</html>
