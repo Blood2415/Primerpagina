@@ -4,45 +4,87 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reproductor de Música</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    #musicList {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #musicList li {
+      margin-bottom: 10px;
+      cursor: pointer;
+      color: #00ffbf;
+    }
+
+    #musicList li:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-
   <h1>Reproductor de Música</h1>
+  
+  <input type="file" id="fileInput" accept=".mp3" multiple>
+  
+  <button onclick="sortMusicListAlphabetically()">Ordenar Alfabéticamente</button>
+  <button onclick="sortMusicListOriginalOrder()">Orden Original de Subida</button>
+  
+  <ul id="musicList"></ul>
+
+  <audio id="audioPlayer" controls></audio>
 
   <script>
-    var canciones = [
-      { nombre: 'Canción 1', artista: 'Artista 1', archivo: 'cancion1.mp3' },
-      { nombre: 'Canción 2', artista: 'Artista 2', archivo: 'cancion2.mp3' },
-      { nombre: 'Canción 3', artista: 'Artista 3', archivo: 'cancion3.mp3' }
-    ];
+    let originalOrder = [];
 
-    var audio = new Audio(); // Elemento de audio HTML
+    document.getElementById('fileInput').addEventListener('change', handleFileSelect);
 
-    function reproducirCancion(indice) {
-      var cancion = canciones[indice];
-      audio.src = cancion.archivo;
-      audio.play();
-      console.log('Reproduciendo: ' + cancion.nombre + ' - ' + cancion.artista);
+    function handleFileSelect(event) {
+      const files = event.target.files;
+      const musicList = document.getElementById('musicList');
+
+      for (const file of files) {
+        const listItem = document.createElement('li');
+        listItem.textContent = file.name;
+        listItem.addEventListener('click', () => {
+          playAudio(file);
+        });
+        musicList.appendChild(listItem);
+        originalOrder.push(listItem);
+      }
+
+      // Ordenar la lista alfabéticamente por defecto
+      sortMusicListAlphabetically();
     }
 
-    function detenerReproduccion() {
-      audio.pause();
-      audio.currentTime = 0;
-      console.log('Reproducción detenida.');
+    function sortMusicListAlphabetically() {
+      const musicList = document.getElementById('musicList');
+      const items = Array.from(musicList.getElementsByTagName('li'));
+
+      // Ordenar de A-Z
+      items.sort((a, b) => a.textContent.localeCompare(b.textContent));
+
+      // Mostrar la lista ordenada
+      musicList.innerHTML = '';
+      items.forEach(item => musicList.appendChild(item));
     }
 
-    function mostrarListaCanciones() {
-      console.log('Lista de Canciones:');
-      canciones.forEach(function(cancion, indice) {
-        console.log(indice + 1 + '. ' + cancion.nombre + ' - ' + cancion.artista);
-      });
+    function sortMusicListOriginalOrder() {
+      // Restaurar el orden original de subida
+      originalOrder.forEach(item => document.getElementById('musicList').appendChild(item));
     }
 
-    // Ejemplo de uso
-    reproducirCancion(0);
-    mostrarListaCanciones();
-    detenerReproduccion();
+    function playAudio(file) {
+      const audioPlayer = document.getElementById('audioPlayer');
+      const audioSource = URL.createObjectURL(file);
+
+      audioPlayer.src = audioSource;
+      audioPlayer.play();
+    }
   </script>
-
 </body>
 </html>
